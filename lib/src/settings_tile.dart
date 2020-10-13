@@ -160,7 +160,7 @@ class SettingsTile extends StatelessWidget {
     } else {
 
       return Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
             Icon(Icons.developer_mode),
