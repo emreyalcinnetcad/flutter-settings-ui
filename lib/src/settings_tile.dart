@@ -161,9 +161,10 @@ class SettingsTile extends StatelessWidget {
 
       return ListTile(
         leading:   Icon(Icons.developer_mode),
-        title:    DropdownButton(
+        title: Text(title),
+        trailing:    DropdownButton(
           underline: null,
-            value: title,
+            value: subtitle,
             items: buildDropDownMenuItems(dropDownList),
             onChanged: (value) {
               onDropDownSelected(value);
