@@ -159,19 +159,6 @@ class SettingsTile extends StatelessWidget {
       );
     } else {
 
-      List<DropdownMenuItem<String>> buildDropDownMenuItems(List listItems) {
-        List<DropdownMenuItem<String>> items = List();
-        for (String listItem in listItems) {
-          items.add(
-            DropdownMenuItem(
-              child: Text(listItem),
-              value: listItem,
-            ),
-          );
-        }
-        return items;
-      }
-
       return DropdownButton(
           value: title,
           items: buildDropDownMenuItems(dropDownList),
@@ -180,4 +167,19 @@ class SettingsTile extends StatelessWidget {
           });
     }
   }
+
+
+  List<DropdownMenuItem<String>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<String>> items = List();
+    for (String listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(listItem),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
+  }
+
 }
