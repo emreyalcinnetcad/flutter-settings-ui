@@ -147,7 +147,7 @@ class SettingsTile extends StatelessWidget {
         subtitle:
             subtitle != null ? Text(subtitle, style: subtitleTextStyle) : null,
       );
-    } else {
+    } else if(_tileType==_SettingsTileType.simple) {
       return ListTile(
         title: Text(title, style: titleTextStyle),
         subtitle:
@@ -157,6 +157,27 @@ class SettingsTile extends StatelessWidget {
         trailing: trailing,
         onTap: onTap,
       );
+    } else {
+
+      List<DropdownMenuItem<String>> buildDropDownMenuItems(List listItems) {
+        List<DropdownMenuItem<String>> items = List();
+        for (String listItem in listItems) {
+          items.add(
+            DropdownMenuItem(
+              child: Text(listItem),
+              value: listItem,
+            ),
+          );
+        }
+        return items;
+      }
+
+      return DropdownButton(
+          value: title,
+          items: buildDropDownMenuItems(dropDownList),
+          onChanged: (value) {
+            onDropDownSelected(value);
+          });
     }
   }
 }
