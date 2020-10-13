@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:settings_ui/src/cupertino_settings_item.dart';
 import 'package:settings_ui/src/extensions.dart';
 
-enum _SettingsTileType { simple, switchTile }
+enum _SettingsTileType { simple, switchTile, dropDown }
 
 class SettingsTile extends StatelessWidget {
   final String title;
@@ -15,12 +15,15 @@ class SettingsTile extends StatelessWidget {
   final Widget trailing;
   final VoidCallback onTap;
   final Function(bool value) onToggle;
+  final Function(String value) onDropDownSelected;
   final bool switchValue;
   final bool enabled;
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final Color switchActiveColor;
   final _SettingsTileType _tileType;
+
+  final List<String> dropDownList;
 
   const SettingsTile({
     Key key,
@@ -33,6 +36,8 @@ class SettingsTile extends StatelessWidget {
     this.subtitleTextStyle,
     this.enabled = true,
     this.switchActiveColor,
+    this.dropDownList,
+    this.onDropDownSelected,
   })  : _tileType = _SettingsTileType.simple,
         onToggle = null,
         switchValue = null,
@@ -50,13 +55,33 @@ class SettingsTile extends StatelessWidget {
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.switchActiveColor,
+    this.dropDownList,
+    this.onDropDownSelected,
   })  : _tileType = _SettingsTileType.switchTile,
+        onTap = null,
+        super(key: key);
+
+  const SettingsTile.dropDown({
+    Key key,
+    @required this.title,
+    this.subtitle,
+    this.leading,
+    this.enabled = true,
+    this.trailing,
+    @required this.onToggle,
+    @required this.switchValue,
+    this.titleTextStyle,
+    this.subtitleTextStyle,
+    this.switchActiveColor,
+    this.dropDownList,
+    this.onDropDownSelected,
+  })  : _tileType = _SettingsTileType.dropDown,
         onTap = null,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      return androidTile();
+    return androidTile();
   }
 
   Widget iosTile() {
@@ -73,7 +98,7 @@ class SettingsTile extends StatelessWidget {
         subtitleTextStyle: subtitleTextStyle,
         valueTextStyle: subtitleTextStyle,
       );
-    } else {
+    } else if (_tileType == _SettingsTileType.simple) {
       return CupertinoSettingsItem(
         enabled: enabled,
         type: SettingsItemType.modal,
@@ -87,6 +112,26 @@ class SettingsTile extends StatelessWidget {
         subtitleTextStyle: subtitleTextStyle,
         valueTextStyle: subtitleTextStyle,
       );
+    } else {
+      List<DropdownMenuItem<String>> buildDropDownMenuItems(List listItems) {
+        List<DropdownMenuItem<String>> items = List();
+        for (String listItem in listItems) {
+          items.add(
+            DropdownMenuItem(
+              child: Text(listItem),
+              value: listItem,
+            ),
+          );
+        }
+        return items;
+      }
+
+      return DropdownButton(
+        value: dropDownList[0],
+          items: buildDropDownMenuItems(dropDownList),
+          onChanged: (value) {
+            onDropDownSelected(value);
+          });
     }
   }
 
