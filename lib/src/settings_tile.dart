@@ -113,6 +113,7 @@ class SettingsTile extends StatelessWidget {
         valueTextStyle: subtitleTextStyle,
       );
     } else {
+      
       List<DropdownMenuItem<String>> buildDropDownMenuItems(List listItems) {
         List<DropdownMenuItem<String>> items = List();
         for (String listItem in listItems) {
@@ -127,7 +128,7 @@ class SettingsTile extends StatelessWidget {
       }
 
       return DropdownButton(
-        value: dropDownList[0],
+        value: title,
           items: buildDropDownMenuItems(dropDownList),
           onChanged: (value) {
             onDropDownSelected(value);
