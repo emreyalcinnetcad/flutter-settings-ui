@@ -161,12 +161,17 @@ class SettingsTile extends StatelessWidget {
 
       return Container(
         padding: EdgeInsets.all(20),
-        child: DropdownButton(
-            value: title,
-            items: buildDropDownMenuItems(dropDownList),
-            onChanged: (value) {
-              onDropDownSelected(value);
-            }),
+        child: Row(
+          children: [
+            Icon(Icons.developer_mode),
+            DropdownButton(
+                value: title,
+                items: buildDropDownMenuItems(dropDownList),
+                onChanged: (value) {
+                  onDropDownSelected(value);
+                })
+          ],
+        ),
       );
     }
   }
