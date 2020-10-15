@@ -160,7 +160,7 @@ class SettingsTile extends StatelessWidget {
     } else {
 
       return ListTile(
-        leading:   Icon(Icons.developer_mode),
+        leading:  leading,
         title: Text(title),
         trailing:    DropdownButton(
           underline: null,
